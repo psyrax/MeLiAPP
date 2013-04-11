@@ -10,6 +10,10 @@
 
 @interface OGLAppDelegate : UIResponder <UIApplicationDelegate>
 
+{
+    UIViewController * firstVC;
+}
+
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

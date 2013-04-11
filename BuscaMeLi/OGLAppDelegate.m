@@ -7,6 +7,8 @@
 //
 
 #import "OGLAppDelegate.h"
+#import "OGMeliAPI.h"
+#import "OGLResultadosTableViewController.h"
 
 @implementation OGLAppDelegate
 
@@ -16,10 +18,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    firstVC = [[UIViewController alloc] init];
+    UIViewController* secondVC = [[UIViewController alloc] init];
+    
+    UISplitViewController* splitVC = [[UISplitViewController alloc] init];
+    splitVC.viewControllers = [NSArray arrayWithObjects:firstVC, secondVC, nil];
+    
+    _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    _window.rootViewController = splitVC;
+    [_window makeKeyAndVisible];
+    
+    OGMeLiAPI *MeLiAPI;
+    MeLiAPI = [[OGMeLiAPI alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataMaker:) name:@"Resultados" object:nil];
+    
     return YES;
 }
 
@@ -31,7 +44,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state ma to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -145,5 +158,12 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
-
+#pragma mark - Table Data Maker
+-(void)tableDataMaker:(NSNotification *)notificacion
+{
+    OGLResultadosTableViewController *resultadosTabla = [[OGLResultadosTableViewController alloc] initWithStyle:UITableViewStylePlain withData:[notificacion object]];
+    [firstVC addChildViewController:resultadosTabla];
+    [[firstVC view] addSubview:[resultadosTabla view]];
+   
+}
 @end

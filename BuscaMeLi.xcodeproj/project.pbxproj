@@ -18,6 +18,8 @@
 		8BF5BB90171545D20073533B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF5BB8F171545D20073533B /* Default@2x.png */; };
 		8BF5BB92171545D20073533B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF5BB91171545D20073533B /* Default-568h@2x.png */; };
 		8BF5BB95171545D20073533B /* BuscaMeLi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5BB93171545D20073533B /* BuscaMeLi.xcdatamodeld */; };
+		8BF5BB9D171546130073533B /* OGMeLiAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5BB9C171546130073533B /* OGMeLiAPI.m */; };
+		8BF5BBA117156BF60073533B /* OGLResultadosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5BBA017156BF60073533B /* OGLResultadosTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,10 @@
 		8BF5BB8F171545D20073533B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8BF5BB91171545D20073533B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		8BF5BB94171545D20073533B /* BuscaMeLi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BuscaMeLi.xcdatamodel; sourceTree = "<group>"; };
+		8BF5BB9B171546130073533B /* OGMeLiAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGMeLiAPI.h; path = BuscaMeLi/MeLiAPI/OGMeLiAPI.h; sourceTree = "<group>"; };
+		8BF5BB9C171546130073533B /* OGMeLiAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OGMeLiAPI.m; path = BuscaMeLi/MeLiAPI/OGMeLiAPI.m; sourceTree = "<group>"; };
+		8BF5BB9F17156BF60073533B /* OGLResultadosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGLResultadosTableViewController.h; path = Resultados/OGLResultadosTableViewController.h; sourceTree = "<group>"; };
+		8BF5BBA017156BF60073533B /* OGLResultadosTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OGLResultadosTableViewController.m; path = Resultados/OGLResultadosTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,7 @@
 		8BF5BB6D171545D20073533B = {
 			isa = PBXGroup;
 			children = (
+				8BF5BB9E1715461C0073533B /* MeLiAPI */,
 				8BF5BB81171545D20073533B /* BuscaMeLi */,
 				8BF5BB78171545D20073533B /* Frameworks */,
 				8BF5BB77171545D20073533B /* Products */,
@@ -86,6 +93,7 @@
 			children = (
 				8BF5BB8A171545D20073533B /* OGLAppDelegate.h */,
 				8BF5BB8B171545D20073533B /* OGLAppDelegate.m */,
+				8BF5BBA217156D1D0073533B /* Resultados */,
 				8BF5BB93171545D20073533B /* BuscaMeLi.xcdatamodeld */,
 				8BF5BB82171545D20073533B /* Supporting Files */,
 			);
@@ -104,6 +112,24 @@
 				8BF5BB91171545D20073533B /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8BF5BB9E1715461C0073533B /* MeLiAPI */ = {
+			isa = PBXGroup;
+			children = (
+				8BF5BB9B171546130073533B /* OGMeLiAPI.h */,
+				8BF5BB9C171546130073533B /* OGMeLiAPI.m */,
+			);
+			name = MeLiAPI;
+			sourceTree = "<group>";
+		};
+		8BF5BBA217156D1D0073533B /* Resultados */ = {
+			isa = PBXGroup;
+			children = (
+				8BF5BB9F17156BF60073533B /* OGLResultadosTableViewController.h */,
+				8BF5BBA017156BF60073533B /* OGLResultadosTableViewController.m */,
+			);
+			name = Resultados;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +201,8 @@
 				8BF5BB88171545D20073533B /* main.m in Sources */,
 				8BF5BB8C171545D20073533B /* OGLAppDelegate.m in Sources */,
 				8BF5BB95171545D20073533B /* BuscaMeLi.xcdatamodeld in Sources */,
+				8BF5BB9D171546130073533B /* OGMeLiAPI.m in Sources */,
+				8BF5BBA117156BF60073533B /* OGLResultadosTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
