@@ -9,13 +9,14 @@
 #import "OGMeLiAPI.h"
 
 @implementation OGMeLiAPI
-@synthesize sitesMeli, selectedSite, queryResult;
+@synthesize sitesMeli, selectedSite, queryResult, nextPaginate, queryString;
 
 - (id)init {
     self = [super init];
     if (self) {
         // Initialize self.
         [self setSelectedSite:@"MLM"];
+        [self setQueryString:@"Nerf"];
         [self getMeLiQuery];
     }
     return self;
@@ -64,11 +65,17 @@
     
 }
 
+-(void)paginateToNext
+{
+    
+}
+
 -(void)getMeLiQuery
 {
     [self setQueryString:[NSString
-                          stringWithFormat:@"https://api.mercadolibre.com/sites/%@/search?q=ipod",
-                          [self selectedSite]]];
+                          stringWithFormat:@"https://api.mercadolibre.com/sites/%@/search?q=%@",
+                          [self selectedSite], [self queryString] ]
+     ];
     [self getMeLi:[self queryString]];
 }
 @end

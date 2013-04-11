@@ -13,9 +13,6 @@
 {
     
 }
-@property (nonatomic, assign) NSDictionary *sitesMeli;
-@property (nonatomic, assign) NSDictionary *queryResult;
-@property (nonatomic, assign) NSString *selectedSite;
-@property (nonatomic, assign) NSString *queryString;
-
+@property (nonatomic, assign) NSDictionary *sitesMeli, *queryResult;
+@property (nonatomic, assign) NSString *selectedSite, *queryString, *nextPaginate;
 @end

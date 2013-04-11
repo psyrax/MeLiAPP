@@ -8,7 +8,7 @@
 
 #import "OGLAppDelegate.h"
 #import "OGMeliAPI.h"
-#import "OGLResultadosTableViewController.h"
+
 
 @implementation OGLAppDelegate
 
@@ -18,20 +18,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    firstVC = [[UIViewController alloc] init];
-    UIViewController* secondVC = [[UIViewController alloc] init];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
     
-    UISplitViewController* splitVC = [[UISplitViewController alloc] init];
-    splitVC.viewControllers = [NSArray arrayWithObjects:firstVC, secondVC, nil];
-    
-    _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    _window.rootViewController = splitVC;
-    [_window makeKeyAndVisible];
+    mainVC = [[OGLMainViewController alloc] init];
+    [[self window] setRootViewController:mainVC];
     
     OGMeLiAPI *MeLiAPI;
     MeLiAPI = [[OGMeLiAPI alloc] init];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableDataMaker:) name:@"Resultados" object:nil];
     
     return YES;
 }
@@ -158,12 +154,5 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
-#pragma mark - Table Data Maker
--(void)tableDataMaker:(NSNotification *)notificacion
-{
-    OGLResultadosTableViewController *resultadosTabla = [[OGLResultadosTableViewController alloc] initWithStyle:UITableViewStylePlain withData:[notificacion object]];
-    [firstVC addChildViewController:resultadosTabla];
-    [[firstVC view] addSubview:[resultadosTabla view]];
-   
-}
+
 @end

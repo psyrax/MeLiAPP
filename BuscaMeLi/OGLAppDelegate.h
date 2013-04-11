@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "OGLMainViewController.h"
 @interface OGLAppDelegate : UIResponder <UIApplicationDelegate>
 
-{
-    UIViewController * firstVC;
-}
 
+{
+    OGLMainViewController *mainVC;
+}
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

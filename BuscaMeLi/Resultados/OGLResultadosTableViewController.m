@@ -24,12 +24,29 @@
     if (self) {
         // Custom initialization
         [self setDataArray:data];
+        [[self tableView] setRowHeight:80];
+        UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+        [footer setBackgroundColor:[UIColor grayColor]];
+        UILabel *mas = [[UILabel alloc] init];
+        [mas setText:@"Ver más resultados"];
+        [mas setTextColor:[UIColor whiteColor]];
+        [mas setBackgroundColor:[UIColor clearColor]];
+        [mas setFrame:footer.frame];
+        [footer setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *masTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(masTapped)];
+        [footer addGestureRecognizer:masTap];
+        [footer addSubview:mas];
+        [[self tableView] setTableFooterView:footer];
         //NSLog(@"%@", data);
     }
     return self;
 }
 
-
+-(void)masTapped
+{
+    NSLog(@"LOL");
+}
 
 - (void)viewDidLoad
 {
@@ -97,8 +114,7 @@
     NSString *textoDetalle = [NSString stringWithFormat:@"$%@ %@ | %@", precio, condicionFancy, estado];
     cell.detailTextLabel.text = textoDetalle;
     
-    UIImage *thumb = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[cellResultado objectForKey:@"thumbnail"]]]];
-    cell.imageView.image = thumb;
+    [cell.imageView setImageWithURL:[cellResultado objectForKey:@"thumbnail"] placeholderImage:[UIImage imageNamed:@"imgs/placeholder.jpg"]];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     return cell;
 }
