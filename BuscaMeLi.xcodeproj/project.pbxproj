@@ -20,6 +20,10 @@
 		8BF5BB95171545D20073533B /* BuscaMeLi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5BB93171545D20073533B /* BuscaMeLi.xcdatamodeld */; };
 		8BF5BB9D171546130073533B /* OGMeLiAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5BB9C171546130073533B /* OGMeLiAPI.m */; };
 		8BF5BBA117156BF60073533B /* OGLResultadosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5BBA017156BF60073533B /* OGLResultadosTableViewController.m */; };
+		BB11C5691717759B0073D322 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB11C5681717759B0073D322 /* ImageIO.framework */; };
+		BB11C56B171778640073D322 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB11C56A171778640073D322 /* SDWebImage.framework */; };
+		BB11C570171778840073D322 /* OGLMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB11C56F171778840073D322 /* OGLMainViewController.m */; };
+		BB11C5721717788D0073D322 /* imgs in Resources */ = {isa = PBXBuildFile; fileRef = BB11C5711717788D0073D322 /* imgs */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,11 @@
 		8BF5BB9C171546130073533B /* OGMeLiAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OGMeLiAPI.m; path = BuscaMeLi/MeLiAPI/OGMeLiAPI.m; sourceTree = "<group>"; };
 		8BF5BB9F17156BF60073533B /* OGLResultadosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGLResultadosTableViewController.h; path = Resultados/OGLResultadosTableViewController.h; sourceTree = "<group>"; };
 		8BF5BBA017156BF60073533B /* OGLResultadosTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OGLResultadosTableViewController.m; path = Resultados/OGLResultadosTableViewController.m; sourceTree = "<group>"; };
+		BB11C5681717759B0073D322 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		BB11C56A171778640073D322 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = ../iOSFrameworks/SDWebImage.framework; sourceTree = "<group>"; };
+		BB11C56E171778840073D322 /* OGLMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLMainViewController.h; sourceTree = "<group>"; };
+		BB11C56F171778840073D322 /* OGLMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLMainViewController.m; sourceTree = "<group>"; };
+		BB11C5711717788D0073D322 /* imgs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = imgs; path = BuscaMeLi/imgs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,10 +58,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB11C5691717759B0073D322 /* ImageIO.framework in Frameworks */,
 				8BF5BB7A171545D20073533B /* UIKit.framework in Frameworks */,
 				8BF5BB7C171545D20073533B /* Foundation.framework in Frameworks */,
 				8BF5BB7E171545D20073533B /* CoreGraphics.framework in Frameworks */,
 				8BF5BB80171545D20073533B /* CoreData.framework in Frameworks */,
+				BB11C56B171778640073D322 /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +73,10 @@
 		8BF5BB6D171545D20073533B = {
 			isa = PBXGroup;
 			children = (
+				BB11C5711717788D0073D322 /* imgs */,
+				BB11C56C171778840073D322 /* iphone */,
+				BB11C56A171778640073D322 /* SDWebImage.framework */,
+				BB11C5681717759B0073D322 /* ImageIO.framework */,
 				8BF5BB9E1715461C0073533B /* MeLiAPI */,
 				8BF5BB81171545D20073533B /* BuscaMeLi */,
 				8BF5BB78171545D20073533B /* Frameworks */,
@@ -132,6 +147,24 @@
 			name = Resultados;
 			sourceTree = "<group>";
 		};
+		BB11C56C171778840073D322 /* iphone */ = {
+			isa = PBXGroup;
+			children = (
+				BB11C56D171778840073D322 /* MainViewController */,
+			);
+			name = iphone;
+			path = BuscaMeLi/iphone;
+			sourceTree = "<group>";
+		};
+		BB11C56D171778840073D322 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BB11C56E171778840073D322 /* OGLMainViewController.h */,
+				BB11C56F171778840073D322 /* OGLMainViewController.m */,
+			);
+			path = MainViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -188,6 +221,7 @@
 				8BF5BB8E171545D20073533B /* Default.png in Resources */,
 				8BF5BB90171545D20073533B /* Default@2x.png in Resources */,
 				8BF5BB92171545D20073533B /* Default-568h@2x.png in Resources */,
+				BB11C5721717788D0073D322 /* imgs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +237,7 @@
 				8BF5BB95171545D20073533B /* BuscaMeLi.xcdatamodeld in Sources */,
 				8BF5BB9D171546130073533B /* OGMeLiAPI.m in Sources */,
 				8BF5BBA117156BF60073533B /* OGLResultadosTableViewController.m in Sources */,
+				BB11C570171778840073D322 /* OGLMainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,9 +316,14 @@
 		8BF5BB99171545D20073533B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../iOSFrameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BuscaMeLi/BuscaMeLi-Prefix.pch";
 				INFOPLIST_FILE = "BuscaMeLi/BuscaMeLi-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -292,9 +332,14 @@
 		8BF5BB9A171545D20073533B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../iOSFrameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BuscaMeLi/BuscaMeLi-Prefix.pch";
 				INFOPLIST_FILE = "BuscaMeLi/BuscaMeLi-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -319,6 +364,7 @@
 				8BF5BB9A171545D20073533B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
