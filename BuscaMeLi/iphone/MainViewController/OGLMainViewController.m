@@ -38,7 +38,10 @@
 #pragma mark - Table Data Maker
 -(void)tableDataMaker:(NSNotification *)notificacion
 {
-   resultadosTabla = [[OGLResultadosTableViewController alloc] initWithStyle:UITableViewStylePlain withData:[notificacion object]];
+   resultadosTabla = [[OGLResultadosTableViewController alloc] initWithStyle:UITableViewStylePlain
+                                                                    withData:[notificacion object]
+                      ];
+    
     [self presentViewController:resultadosTabla animated:YES completion:^{
         
     }];

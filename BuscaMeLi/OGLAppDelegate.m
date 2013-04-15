@@ -7,7 +7,6 @@
 //
 
 #import "OGLAppDelegate.h"
-#import "OGMeliAPI.h"
 
 
 @implementation OGLAppDelegate
@@ -23,11 +22,27 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    mainVC = [[OGLMainViewController alloc] init];
+    searchView = [[OGLSearchViewController alloc] init];
+    
+    mainVC = [[OGLNavigationViewController alloc] initWithRootViewController:searchView];
     [[self window] setRootViewController:mainVC];
     
-    OGMeLiAPI *MeLiAPI;
     MeLiAPI = [[OGMeLiAPI alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getNext)
+                                                 name:@"getNext"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startQuery:)
+                                                 name:@"querySet"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadItem:)
+                                                 name:@"SelectedItem"
+                                               object:nil];
     
     return YES;
 }
@@ -154,5 +169,21 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
-
+#pragma mark - Get Next Page
+-(void)getNext
+{
+    [MeLiAPI paginateToNext];
+}
+#pragma mark - Start Search
+-(void)startQuery:(NSNotification *)queryNotification
+{
+    [MeLiAPI setQueryString:[queryNotification object]];
+    [MeLiAPI getMeLiQuery];
+}
+#pragma  mark - Load Item
+-(void)loadItem:(NSNotification *)itemNotification
+{
+    
+    [MeLiAPI getMeLiItem:[itemNotification object]];
+}
 @end

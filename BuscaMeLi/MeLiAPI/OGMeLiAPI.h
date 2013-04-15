@@ -11,8 +11,14 @@
 @interface OGMeLiAPI : NSObject <NSURLConnectionDataDelegate>
 
 {
+    int offsetQ, offsetC;
     
 }
-@property (nonatomic, assign) NSDictionary *sitesMeli, *queryResult;
-@property (nonatomic, assign) NSString *selectedSite, *queryString, *nextPaginate;
+@property (nonatomic, retain) NSDictionary *sitesMeli, *queryResult;
+@property (nonatomic, retain) NSString *selectedSite, *queryString, *nextPaginate, *queryURL, *itemId;
+@property (nonatomic, retain) NSNumber *accion;
+@property (nonatomic, retain) NSMutableDictionary *itemData;
+-(void)paginateToNext;
+-(void)getMeLiQuery;
+-(void)getMeLiItem:(NSString *)item;
 @end

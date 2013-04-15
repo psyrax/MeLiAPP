@@ -10,9 +10,12 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface OGLResultadosTableViewController : UITableViewController
+<UIScrollViewDelegate>
+{
+    UIView *footer;
+    UIActivityIndicatorView *paginando;
+}
 
-
-@property (nonatomic, assign) NSMutableDictionary *tableData;
 @property (nonatomic, retain) NSMutableArray *dataArray;
 
 - (id)initWithStyle:(UITableViewStyle)style withData:(NSMutableArray *)data;

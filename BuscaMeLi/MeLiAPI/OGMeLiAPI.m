@@ -9,15 +9,16 @@
 #import "OGMeLiAPI.h"
 
 @implementation OGMeLiAPI
-@synthesize sitesMeli, selectedSite, queryResult, nextPaginate, queryString;
+@synthesize sitesMeli, selectedSite, queryResult, nextPaginate, queryString, itemId, itemData;
 
 - (id)init {
     self = [super init];
     if (self) {
         // Initialize self.
         [self setSelectedSite:@"MLM"];
-        [self setQueryString:@"Nerf"];
-        [self getMeLiQuery];
+        [self setQueryString:@""];
+        offsetQ = 0;
+        offsetC = 0;
     }
     return self;
 }
@@ -32,21 +33,45 @@
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     
-    NSURL *compareURL = [[ connection currentRequest ] URL];
-    if (  [compareURL isEqual:[NSURL URLWithString:@"https://api.mercadolibre.com/sites"] ] ) {
-        [self setSitesMeli:[self getData:data]];
-        NSLog(@"sites: %@", [self sitesMeli]);
-    }
-    else if ( [ compareURL isEqual:[NSURL URLWithString:[self queryString] ] ] )
-    {
- 
-        [self setQueryResult:[self getData:data]];
-        NSMutableArray *resultados = [[NSMutableArray alloc] init];
-        for (NSDictionary *resultado in [[self queryResult] objectForKey:@"results"]) {
-            [resultados addObject:resultado];
+
+    switch ([[self accion] intValue]) {
+        case 0:
+        {
+            [self setSitesMeli:[self getData:data]];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Resultados"
-                                                            object:resultados];
+            break;
+        case 1:
+        {
+            [self setQueryResult:[self getData:data]];
+            NSMutableArray *resultados = [[NSMutableArray alloc] init];
+            for (NSDictionary *resultado in [[self queryResult] objectForKey:@"results"]) {
+                [resultados addObject:resultado];
+            }
+            if ( offsetQ > 0){
+               
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"Paginacion"
+                                                                    object:resultados];
+            }
+            else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"Resultados"
+                                                                    object:resultados];
+            }
+        }
+            break;
+        case 3:
+        {
+            [self setItemData:[NSMutableDictionary dictionaryWithDictionary:[self getData:data]]];
+            [self getMeLiItemDescription];
+        }
+            break;
+        case 4:
+        {
+            [[self itemData] setObject:[self getData:data] forKey:@"fullDescriptions"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ItemData"
+                                                                object:[self itemData]];
+        }
+            break;
+ 
     }
 }
 
@@ -61,21 +86,46 @@
 
 -(void)getMeLiSites
 {
+    [self setAccion:[NSNumber numberWithInt:0]];
     [self getMeLi:@"https://api.mercadolibre.com/sites"];
-    
+   
 }
 
 -(void)paginateToNext
 {
-    
+    NSDictionary *paging = [queryResult objectForKey:@"paging"];
+    offsetC ++;
+    offsetQ = offsetC * 50;
+    if ( [ [paging objectForKey:@"total"] intValue ] > offsetQ )
+    {
+        [self getMeLiQuery];
+    }else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"sinResultados" object:nil];
+    }
+
 }
 
 -(void)getMeLiQuery
 {
-    [self setQueryString:[NSString
-                          stringWithFormat:@"https://api.mercadolibre.com/sites/%@/search?q=%@",
-                          [self selectedSite], [self queryString] ]
+    [self setQueryURL:[NSString
+                          stringWithFormat:@"https://api.mercadolibre.com/sites/%@/search?q=%@&offset=%@",
+                          [self selectedSite], [self queryString], [NSString stringWithFormat:@"%i", offsetQ] ]
      ];
-    [self getMeLi:[self queryString]];
+    [self setAccion:[NSNumber numberWithInt:1]];
+    [self getMeLi:[self queryURL]];
+   
+}
+#pragma  mark - Item de ML
+-(void)getMeLiItem:(NSString *)item
+{
+    [self setItemId:item];
+    [self setAccion:[NSNumber numberWithInt:3]];
+    [self getMeLi:[NSString stringWithFormat:@"https://api.mercadolibre.com/items/%@", [self itemId]]];
+}
+-(void)getMeLiItemDescription
+{
+    [self setAccion:[NSNumber numberWithInt:4]];
+    [self getMeLi:[NSString stringWithFormat:@"https://api.mercadolibre.com/items/%@/descriptions", [self itemId]]];
 }
 @end

@@ -16,37 +16,34 @@
 @implementation OGLResultadosTableViewController
 
 
-@synthesize tableData, dataArray;
+@synthesize dataArray;
 
 - (id)initWithStyle:(UITableViewStyle)style withData:(NSMutableArray *)data
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(addPage:)
+                                                     name:@"Paginacion" object:nil
+         ];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(endPage:)
+                                                     name:@"sinResultados"
+                                                   object:nil
+         ];
         [self setDataArray:data];
         [[self tableView] setRowHeight:80];
-        UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-        [footer setBackgroundColor:[UIColor grayColor]];
-        UILabel *mas = [[UILabel alloc] init];
-        [mas setText:@"Ver más resultados"];
-        [mas setTextColor:[UIColor whiteColor]];
-        [mas setBackgroundColor:[UIColor clearColor]];
-        [mas setFrame:footer.frame];
+        footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
         [footer setUserInteractionEnabled:YES];
-        UITapGestureRecognizer *masTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                 action:@selector(masTapped)];
-        [footer addGestureRecognizer:masTap];
-        [footer addSubview:mas];
         [[self tableView] setTableFooterView:footer];
-        //NSLog(@"%@", data);
+        UIBarButtonItem *queryMaker = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:[self parentViewController] action:@selector(queryShow)];
+        [[self navigationItem] setLeftBarButtonItem:queryMaker animated:YES];
+        
     }
     return self;
 }
 
--(void)masTapped
-{
-    NSLog(@"LOL");
-}
 
 - (void)viewDidLoad
 {
@@ -113,6 +110,7 @@
     }
     NSString *textoDetalle = [NSString stringWithFormat:@"$%@ %@ | %@", precio, condicionFancy, estado];
     cell.detailTextLabel.text = textoDetalle;
+    [[cell detailTextLabel] sizeToFit];
     
     [cell.imageView setImageWithURL:[cellResultado objectForKey:@"thumbnail"] placeholderImage:[UIImage imageNamed:@"imgs/placeholder.jpg"]];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
@@ -169,7 +167,51 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
-    NSLog(@"Selected: %@", [[dataArray objectAtIndex:indexPath.row] objectForKey:@"id"]);
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"SelectedItem"
+     object:[[dataArray objectAtIndex:indexPath.row] objectForKey:@"id"]];
 }
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    CGSize contentSize = [scrollView contentSize];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat offset = scrollView.contentOffset.y;
 
+    if ( ( contentSize.height - offset ) <= (screenBounds.size.height + 200) ) {
+        if ( ![paginando isAnimating] )
+        {
+            [paginando startAnimating];
+            [self setActivityIndicator];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getNext" object:nil];
+        }
+      
+       
+    }
+}
+-(void)setActivityIndicator
+{
+    paginando = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [paginando setFrame:CGRectMake( ( (footer.bounds.size.width/2) - (paginando.frame.size.width/2) ), ( (footer.bounds.size.height/2) - (paginando.frame.size.height/2) ), paginando.frame.size.width, paginando.frame.size.height)];
+    [paginando setHidesWhenStopped:YES];
+    [paginando stopAnimating];
+    [footer addSubview:paginando];
+
+}
+#pragma mark - Add Page
+-(void)addPage:(NSNotification *)notificacionPagina
+{
+    [[self dataArray] addObjectsFromArray:[notificacionPagina object]];
+    [[self tableView] reloadData];
+    [paginando stopAnimating];
+}
+#pragma mark - End Page
+-(void)endPage:(NSNotification *)notificacionEnd
+{
+    [paginando removeFromSuperview];
+    UILabel *end = [[UILabel alloc] init];
+    [end setText:@"No hay mas resultados"];
+    [end sizeToFit];
+    [end setFrame:CGRectMake( ( (footer.bounds.size.width/2) - (end.frame.size.width/2) ), ( (footer.bounds.size.height/2) - (end.frame.size.height/2) ), end.frame.size.width, end.frame.size.height)];
+    [footer addSubview:end];
+}
 @end
